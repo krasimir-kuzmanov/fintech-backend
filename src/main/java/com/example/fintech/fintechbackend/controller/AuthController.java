@@ -6,11 +6,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +34,7 @@ public class AuthController {
       @ApiResponse(responseCode = "400", description = "Invalid request")
   })
   public User register(
-      @RequestBody(
+      @io.swagger.v3.oas.annotations.parameters.RequestBody(
           description = "Registration payload",
           required = true,
           content = @Content(
@@ -43,7 +43,7 @@ public class AuthController {
               examples = @ExampleObject(value = "{\"username\": \"alice\", \"password\": \"secret\"}")
           )
       )
-      @org.springframework.web.bind.annotation.RequestBody Map<String, String> body
+      @RequestBody Map<String, String> body
   ) {
     String username = body.get("username");
     String password = body.get("password");
@@ -58,7 +58,7 @@ public class AuthController {
       @ApiResponse(responseCode = "401", description = "Invalid credentials")
   })
   public Map<String, String> login(
-      @RequestBody(
+      @io.swagger.v3.oas.annotations.parameters.RequestBody(
           description = "Login payload",
           required = true,
           content = @Content(
@@ -67,7 +67,7 @@ public class AuthController {
               examples = @ExampleObject(value = "{\"username\": \"alice\", \"password\": \"secret\"}")
           )
       )
-      @org.springframework.web.bind.annotation.RequestBody Map<String, String> body
+      @RequestBody Map<String, String> body
   ) {
     String username = body.get("username");
     String password = body.get("password");

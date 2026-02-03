@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -52,7 +51,7 @@ public class AccountController {
   public Account fundAccount(
       @Parameter(description = "Account identifier", required = true)
       @PathVariable String accountId,
-      @RequestBody(
+      @io.swagger.v3.oas.annotations.parameters.RequestBody(
           description = "Funding request payload",
           required = true,
           content = @Content(
@@ -61,7 +60,7 @@ public class AccountController {
               examples = @ExampleObject(value = "{\"amount\": \"100.00\"}")
           )
       )
-      @org.springframework.web.bind.annotation.RequestBody Map<String, String> body
+      @RequestBody Map<String, String> body
   ) {
     String amountValue = body.get("amount");
 
