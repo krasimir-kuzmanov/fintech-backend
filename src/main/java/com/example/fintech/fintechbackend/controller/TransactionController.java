@@ -33,9 +33,9 @@ public class TransactionController {
   @PostMapping("/payment")
   @Operation(summary = "Make payment", description = "Transfer funds from one account to another.")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Payment successful"),
-    @ApiResponse(responseCode = "400", description = "Invalid amount or request"),
-    @ApiResponse(responseCode = "404", description = "Account not found")
+      @ApiResponse(responseCode = "200", description = "Payment successful"),
+      @ApiResponse(responseCode = "400", description = "Invalid amount or request"),
+      @ApiResponse(responseCode = "404", description = "Account not found")
   })
   public Transaction makePayment(
       @RequestBody(
@@ -66,8 +66,8 @@ public class TransactionController {
   @GetMapping("/{accountId}")
   @Operation(summary = "Get transactions", description = "List transactions for an account.")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Transactions retrieved"),
-    @ApiResponse(responseCode = "404", description = "Account not found")
+      @ApiResponse(responseCode = "200", description = "Transactions retrieved"),
+      @ApiResponse(responseCode = "404", description = "Account not found")
   })
   public List<Transaction> getTransactions(
       @Parameter(description = "Account identifier", required = true)

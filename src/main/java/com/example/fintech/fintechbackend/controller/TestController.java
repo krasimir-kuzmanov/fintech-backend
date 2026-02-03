@@ -29,7 +29,7 @@ public class TestController {
   @PostMapping("/reset")
   @Operation(summary = "Reset all data", description = "Reset users, accounts, and transactions (test only).")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Reset completed")
+      @ApiResponse(responseCode = "200", description = "Reset completed")
   })
   public String resetAll() {
     authService.reset();

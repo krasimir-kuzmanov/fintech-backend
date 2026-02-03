@@ -32,8 +32,8 @@ public class AccountController {
   @GetMapping("/{accountId}")
   @Operation(summary = "Get account", description = "Fetch account details by account ID.")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Account found"),
-    @ApiResponse(responseCode = "404", description = "Account not found")
+      @ApiResponse(responseCode = "200", description = "Account found"),
+      @ApiResponse(responseCode = "404", description = "Account not found")
   })
   public Account getAccount(
       @Parameter(description = "Account identifier", required = true)
@@ -45,9 +45,9 @@ public class AccountController {
   @PostMapping("/{accountId}/fund")
   @Operation(summary = "Fund account", description = "Deposit funds into an account.")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Account funded"),
-    @ApiResponse(responseCode = "400", description = "Invalid amount"),
-    @ApiResponse(responseCode = "404", description = "Account not found")
+      @ApiResponse(responseCode = "200", description = "Account funded"),
+      @ApiResponse(responseCode = "400", description = "Invalid amount"),
+      @ApiResponse(responseCode = "404", description = "Account not found")
   })
   public Account fundAccount(
       @Parameter(description = "Account identifier", required = true)

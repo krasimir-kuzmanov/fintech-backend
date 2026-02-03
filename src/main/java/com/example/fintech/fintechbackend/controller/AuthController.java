@@ -30,8 +30,8 @@ public class AuthController {
   @PostMapping("/register")
   @Operation(summary = "Register", description = "Register a new user account.")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Registration successful"),
-    @ApiResponse(responseCode = "400", description = "Invalid request")
+      @ApiResponse(responseCode = "200", description = "Registration successful"),
+      @ApiResponse(responseCode = "400", description = "Invalid request")
   })
   public User register(
       @RequestBody(
@@ -54,8 +54,8 @@ public class AuthController {
   @PostMapping("/login")
   @Operation(summary = "Login", description = "Authenticate a user and return a token.")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Login successful"),
-    @ApiResponse(responseCode = "401", description = "Invalid credentials")
+      @ApiResponse(responseCode = "200", description = "Login successful"),
+      @ApiResponse(responseCode = "401", description = "Invalid credentials")
   })
   public Map<String, String> login(
       @RequestBody(
