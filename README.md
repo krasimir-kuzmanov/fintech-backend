@@ -8,6 +8,7 @@ Spring Boot backend for the Fintech project.
 - Framework: Spring Boot 4.0.2
 - Persistence: Spring Data JPA
 - Database: H2 (in-memory)
+- API Docs: Springdoc OpenAPI (Swagger UI)
 
 **Project Layout**
 - Application entrypoint: `src/main/java/com/example/fintech/fintechbackend/FintechBackendApplication.java`
@@ -26,17 +27,24 @@ Spring Boot backend for the Fintech project.
 
 ## Prerequisites
 - JDK 21 installed
+- SDKMAN available (project includes `.sdkmanrc`)
 - No local Gradle install required (wrapper included)
 
 ## Run Locally
 From the project root:
 
 ```bash
+sdk env
 ./gradlew bootRun
 ```
 
 App starts at:
 - `http://localhost:8080`
+
+API Documentation (after starting the app):
+- Open the following URLs:
+- `http://localhost:8080/swagger-ui/index.html`
+- `http://localhost:8080/v3/api-docs`
 
 H2 console:
 - `http://localhost:8080/h2-console`
