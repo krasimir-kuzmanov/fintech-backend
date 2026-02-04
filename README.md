@@ -2,6 +2,8 @@
 
 Spring Boot backend for the Fintech project.
 
+This backend is intentionally designed to be consumed by automated UI and API test suites.
+
 **Tech Stack**
 - Java: 21 (Gradle toolchain)
 - Build: Gradle Wrapper 9.3

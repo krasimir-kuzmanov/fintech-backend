@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.5
+- Enhance ReadMe file
+
 ## 0.0.4
 - Fix RequestBody annotations in controllers for Swagger/OpenAPI docs.
 
