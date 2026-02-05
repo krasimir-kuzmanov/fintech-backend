@@ -64,6 +64,7 @@ public class TestController {
       @RequestBody CreateTestUserRequest body
   ) {
     boolean overwrite = body.overwrite != null && body.overwrite;
+
     return authService.createTestUser(body.username, body.password, overwrite);
   }
 
