@@ -36,6 +36,17 @@ public class AuthService {
     return Map.of("userId", user.getId(), "token", token);
   }
 
+  public User createTestUser(String username, String password, boolean overwrite) {
+    if (users.containsKey(username) && !overwrite) {
+      throw new FintechException(ErrorCode.USER_ALREADY_EXISTS);
+    }
+
+    User user = new User(UUID.randomUUID().toString(), username, password);
+    users.put(username, user);
+
+    return user;
+  }
+
   public void reset() {
     users.clear();
   }
