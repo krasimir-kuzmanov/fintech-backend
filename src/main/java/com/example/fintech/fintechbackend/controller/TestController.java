@@ -1,6 +1,7 @@
 package com.example.fintech.fintechbackend.controller;
 
 import com.example.fintech.fintechbackend.model.User;
+import com.example.fintech.fintechbackend.dto.CreateTestUserRequest;
 import com.example.fintech.fintechbackend.service.AccountService;
 import com.example.fintech.fintechbackend.service.AuthService;
 import com.example.fintech.fintechbackend.service.TransactionService;
@@ -66,9 +67,4 @@ public class TestController {
     return authService.createTestUser(body.username, body.password, overwrite);
   }
 
-  public static class CreateTestUserRequest {
-    public String username;
-    public String password;
-    public Boolean overwrite;
-  }
 }
