@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.7
+- Remove test-only endpoint for creating users.
+
 ## 0.0.6
 - Add test-only endpoint to seed users for API tests.
 
