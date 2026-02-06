@@ -50,8 +50,6 @@ API Documentation (after starting the app):
 
 ## Test Endpoints
 - `POST /test/reset` - reset users, accounts, and transactions (test only).
-- `POST /test/users` - create a test user (test only).
-Example body for `POST /test/users`: `{"username":"john","password":"password","overwrite":true}`
 
 H2 console:
 - `http://localhost:8080/h2-console`
