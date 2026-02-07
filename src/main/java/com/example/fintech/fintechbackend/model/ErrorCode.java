@@ -2,9 +2,11 @@ package com.example.fintech.fintechbackend.model;
 
 public enum ErrorCode {
 
-  INVALID_AMOUNT,
+  FORBIDDEN,
   INSUFFICIENT_FUNDS,
-  USER_ALREADY_EXISTS,
-  INVALID_CREDENTIALS
+  INVALID_AMOUNT,
+  INVALID_CREDENTIALS,
+  UNAUTHORIZED,
+  USER_ALREADY_EXISTS
 
 }

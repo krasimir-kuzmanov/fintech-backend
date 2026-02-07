@@ -3,6 +3,7 @@ package com.example.fintech.fintechbackend.controller;
 import com.example.fintech.fintechbackend.exception.FintechException;
 import com.example.fintech.fintechbackend.model.ErrorCode;
 import com.example.fintech.fintechbackend.model.Transaction;
+import com.example.fintech.fintechbackend.service.AuthService;
 import com.example.fintech.fintechbackend.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,9 +25,11 @@ import java.util.Map;
 public class TransactionController {
 
   private final TransactionService transactionService;
+  private final AuthService authService;
 
-  public TransactionController(TransactionService transactionService) {
+  public TransactionController(TransactionService transactionService, AuthService authService) {
     this.transactionService = transactionService;
+    this.authService = authService;
   }
 
   @PostMapping("/payment")
@@ -37,6 +40,7 @@ public class TransactionController {
       @ApiResponse(responseCode = "404", description = "Account not found")
   })
   public Transaction makePayment(
+      @RequestHeader(value = "Authorization", required = false) String authorizationHeader,
       @io.swagger.v3.oas.annotations.parameters.RequestBody(
           description = "Payment request payload",
           required = true,
@@ -51,6 +55,8 @@ public class TransactionController {
     String fromAccountId = body.get("fromAccountId");
     String toAccountId = body.get("toAccountId");
     String amountValue = body.get("amount");
+
+    authorizeFromAccount(authorizationHeader, fromAccountId);
 
     BigDecimal amount;
     try {
@@ -70,8 +76,21 @@ public class TransactionController {
   })
   public List<Transaction> getTransactions(
       @Parameter(description = "Account identifier", required = true)
-      @PathVariable String accountId
+      @PathVariable String accountId,
+      @RequestHeader(value = "Authorization", required = false) String authorizationHeader
   ) {
+    authorizeAccount(authorizationHeader, accountId);
     return transactionService.getTransactions(accountId);
+  }
+
+  private void authorizeAccount(String authorizationHeader, String accountId) {
+    String userId = authService.authenticate(authorizationHeader);
+    if (!userId.equals(accountId)) {
+      throw new FintechException(ErrorCode.FORBIDDEN);
+    }
+  }
+
+  private void authorizeFromAccount(String authorizationHeader, String fromAccountId) {
+    authorizeAccount(authorizationHeader, fromAccountId);
   }
 }
