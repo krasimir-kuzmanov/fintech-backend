@@ -48,9 +48,6 @@ API Documentation (after starting the app):
 - `http://localhost:8080/swagger-ui/index.html`
 - `http://localhost:8080/v3/api-docs`
 
-## Test Endpoints
-- `POST /test/reset` - reset users, accounts, and transactions (test only).
-
 H2 console:
 - `http://localhost:8080/h2-console`
 
