@@ -48,6 +48,10 @@ API Documentation (after starting the app):
 - `http://localhost:8080/swagger-ui/index.html`
 - `http://localhost:8080/v3/api-docs`
 
+### API Testing
+This backend is validated by an external API test suite:
+👉 https://github.com/krasimir-kuzmanov/fintech-api-tests
+
 H2 console:
 - `http://localhost:8080/h2-console`
 
