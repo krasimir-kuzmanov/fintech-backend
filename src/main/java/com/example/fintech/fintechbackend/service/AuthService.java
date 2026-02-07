@@ -6,15 +6,15 @@ import com.example.fintech.fintechbackend.model.ErrorCode;
 import com.example.fintech.fintechbackend.model.User;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
 
 @Service
 public class AuthService {
 
-  private final Map<String, User> users = new HashMap<>();
-  private final Map<String, String> tokensByValue = new HashMap<>();
+  private final Map<String, User> users = new ConcurrentHashMap<>();
+  private final Map<String, String> tokensByValue = new ConcurrentHashMap<>();
 
   public User register(String username, String password) {
     if (users.containsKey(username)) {

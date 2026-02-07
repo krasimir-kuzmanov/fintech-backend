@@ -6,12 +6,12 @@ import com.example.fintech.fintechbackend.model.ErrorCode;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AccountService {
-  private final Map<String, Account> accounts = new HashMap<>();
+  private final Map<String, Account> accounts = new ConcurrentHashMap<>();
 
   public Account getAccount(String accountId) {
     return accounts.computeIfAbsent(accountId, id -> new Account(id, BigDecimal.ZERO));
