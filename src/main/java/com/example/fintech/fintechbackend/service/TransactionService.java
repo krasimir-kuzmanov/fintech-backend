@@ -8,12 +8,17 @@ import com.example.fintech.fintechbackend.model.TransactionStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class TransactionService {
 
-  private final Map<String, List<Transaction>> transactionsByAccount = new HashMap<>();
+  private final Map<String, List<Transaction>> transactionsByAccount = new ConcurrentHashMap<>();
   private final AccountService accountService;
 
   public TransactionService(AccountService accountService) {
@@ -43,8 +48,12 @@ public class TransactionService {
         TransactionStatus.SUCCESS
     );
 
-    transactionsByAccount.computeIfAbsent(fromAccountId, k -> new ArrayList<>()).add(transaction);
-    transactionsByAccount.computeIfAbsent(toAccountId, k -> new ArrayList<>()).add(transaction);
+    transactionsByAccount
+        .computeIfAbsent(fromAccountId, k -> new CopyOnWriteArrayList<>())
+        .add(transaction);
+    transactionsByAccount
+        .computeIfAbsent(toAccountId, k -> new CopyOnWriteArrayList<>())
+        .add(transaction);
 
     return transaction;
   }
