@@ -64,47 +64,16 @@ public class AccountController {
           content = @Content(
               mediaType = "application/json",
               schema = @Schema(implementation = Map.class),
-              examples = @ExampleObject(value = "{\"amount\": \"100.00\"}")
+              examples = @ExampleObject(value = "{\"amount\": 100.00}")
           )
       )
-      @RequestBody Map<String, String> body
+      @RequestBody Map<String, Object> body
   ) {
     authorizeAccount(authorizationHeader, accountId);
 
-    String amountValue = body.get("amount");
-    BigDecimal amount = parseAmount(amountValue);
+    BigDecimal amount = parseAmount(body);
 
     return accountService.deposit(accountId, amount);
-  }
-
-  @PostMapping(value = "/{accountId}/fund", consumes = MediaType.TEXT_PLAIN_VALUE)
-  @Operation(
-      summary = "Fund account (plain text)",
-      description = "Deposit funds into an account with a plain-text body (e.g. \"100\")."
-  )
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Account funded"),
-      @ApiResponse(responseCode = "400", description = "Invalid amount"),
-      @ApiResponse(responseCode = "404", description = "Account not found")
-  })
-  public Account fundAccountPlainText(
-      @Parameter(description = "Account identifier", required = true)
-      @PathVariable String accountId,
-      @RequestHeader(value = "Authorization", required = false) String authorizationHeader,
-      @RequestBody String amountValue
-  ) {
-    authorizeAccount(authorizationHeader, accountId);
-    BigDecimal amount = parseAmount(amountValue);
-
-    return accountService.deposit(accountId, amount);
-  }
-
-  private BigDecimal parseAmount(String amountValue) {
-    try {
-      return new BigDecimal(amountValue.trim());
-    } catch (Exception e) {
-      throw new FintechException(ErrorCode.INVALID_AMOUNT);
-    }
   }
 
   private void authorizeAccount(String authorizationHeader, String accountId) {
@@ -112,5 +81,14 @@ public class AccountController {
     if (!userId.equals(accountId)) {
       throw new FintechException(ErrorCode.FORBIDDEN);
     }
+  }
+
+  private BigDecimal parseAmount(Map<String, Object> body) {
+    Object amountValue = body.get("amount");
+    if (!(amountValue instanceof Number numberValue)) {
+      throw new FintechException(ErrorCode.INVALID_AMOUNT);
+    }
+
+    return new BigDecimal(numberValue.toString());
   }
 }

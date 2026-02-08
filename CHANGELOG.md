@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.12
+- `POST /account/{accountId}/fund` now accepts only positive numeric amounts.
+
 ## 0.0.11
 - Accept plain-text amounts for `POST /account/{accountId}/fund`.
 
