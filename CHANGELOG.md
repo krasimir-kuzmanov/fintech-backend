@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.11
+- Accept plain-text amounts for `POST /account/{accountId}/fund`.
+
 ## 0.0.10
 - Added logout endpoint and token revocation enforcement.
 

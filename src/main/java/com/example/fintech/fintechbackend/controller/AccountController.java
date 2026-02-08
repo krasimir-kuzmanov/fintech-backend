@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -46,7 +47,7 @@ public class AccountController {
     return accountService.getAccount(accountId);
   }
 
-  @PostMapping("/{accountId}/fund")
+  @PostMapping(value = "/{accountId}/fund", consumes = MediaType.APPLICATION_JSON_VALUE)
   @Operation(summary = "Fund account", description = "Deposit funds into an account.")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Account funded"),
@@ -71,15 +72,39 @@ public class AccountController {
     authorizeAccount(authorizationHeader, accountId);
 
     String amountValue = body.get("amount");
-
-    BigDecimal amount;
-    try {
-      amount = new BigDecimal(amountValue);
-    } catch (NumberFormatException e) {
-      throw new FintechException(ErrorCode.INVALID_AMOUNT);
-    }
+    BigDecimal amount = parseAmount(amountValue);
 
     return accountService.deposit(accountId, amount);
+  }
+
+  @PostMapping(value = "/{accountId}/fund", consumes = MediaType.TEXT_PLAIN_VALUE)
+  @Operation(
+      summary = "Fund account (plain text)",
+      description = "Deposit funds into an account with a plain-text body (e.g. \"100\")."
+  )
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Account funded"),
+      @ApiResponse(responseCode = "400", description = "Invalid amount"),
+      @ApiResponse(responseCode = "404", description = "Account not found")
+  })
+  public Account fundAccountPlainText(
+      @Parameter(description = "Account identifier", required = true)
+      @PathVariable String accountId,
+      @RequestHeader(value = "Authorization", required = false) String authorizationHeader,
+      @RequestBody String amountValue
+  ) {
+    authorizeAccount(authorizationHeader, accountId);
+    BigDecimal amount = parseAmount(amountValue);
+
+    return accountService.deposit(accountId, amount);
+  }
+
+  private BigDecimal parseAmount(String amountValue) {
+    try {
+      return new BigDecimal(amountValue.trim());
+    } catch (Exception e) {
+      throw new FintechException(ErrorCode.INVALID_AMOUNT);
+    }
   }
 
   private void authorizeAccount(String authorizationHeader, String accountId) {
