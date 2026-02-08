@@ -8,7 +8,10 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,5 +76,22 @@ public class AuthController {
     String password = body.get("password");
 
     return authService.login(username, password);
+  }
+
+  @PostMapping("/logout")
+  @Operation(
+      summary = "Logout",
+      description = "Invalidate the bearer token. Logout is idempotent for an already revoked token.",
+      security = @SecurityRequirement(name = "bearerAuth")
+  )
+  @ApiResponses({
+      @ApiResponse(responseCode = "204", description = "Logout successful"),
+      @ApiResponse(responseCode = "401", description = "Missing or invalid token")
+  })
+  public ResponseEntity<Void> logout(
+      @RequestHeader(value = "Authorization", required = false) String authorizationHeader
+  ) {
+    authService.logout(authorizationHeader);
+    return ResponseEntity.noContent().build();
   }
 }
