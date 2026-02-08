@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.9
+- Enable CORS for local frontend development.
+
 ## 0.0.8
 - Resolve concurrency issues
 
