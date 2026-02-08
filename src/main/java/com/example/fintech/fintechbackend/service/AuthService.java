@@ -6,6 +6,7 @@ import com.example.fintech.fintechbackend.model.ErrorCode;
 import com.example.fintech.fintechbackend.model.User;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
@@ -15,6 +16,7 @@ public class AuthService {
 
   private final Map<String, User> users = new ConcurrentHashMap<>();
   private final Map<String, String> tokensByValue = new ConcurrentHashMap<>();
+  private final Map<String, Instant> revokedTokensByValue = new ConcurrentHashMap<>();
 
   public User register(String username, String password) {
     if (users.containsKey(username)) {
@@ -36,11 +38,37 @@ public class AuthService {
 
     String token = UUID.randomUUID().toString(); // fake token
     tokensByValue.put(token, user.getId());
+    revokedTokensByValue.remove(token);
 
     return Map.of("userId", user.getId(), "token", token);
   }
 
   public String authenticate(String authorizationHeader) {
+    String token = extractToken(authorizationHeader);
+    if (revokedTokensByValue.containsKey(token)) {
+      throw new FintechException(ErrorCode.UNAUTHORIZED);
+    }
+
+    String userId = tokensByValue.get(token);
+    if (userId == null) {
+      throw new FintechException(ErrorCode.UNAUTHORIZED);
+    }
+
+    return userId;
+  }
+
+  public void logout(String authorizationHeader) {
+    String token = extractToken(authorizationHeader);
+    boolean knownToken = tokensByValue.containsKey(token) || revokedTokensByValue.containsKey(token);
+    if (!knownToken) {
+      throw new FintechException(ErrorCode.UNAUTHORIZED);
+    }
+
+    tokensByValue.remove(token);
+    revokedTokensByValue.putIfAbsent(token, Instant.now());
+  }
+
+  private String extractToken(String authorizationHeader) {
     if (authorizationHeader == null || authorizationHeader.isBlank()) {
       throw new FintechException(ErrorCode.UNAUTHORIZED);
     }
@@ -54,16 +82,12 @@ public class AuthService {
       throw new FintechException(ErrorCode.UNAUTHORIZED);
     }
 
-    String userId = tokensByValue.get(token);
-    if (userId == null) {
-      throw new FintechException(ErrorCode.UNAUTHORIZED);
-    }
-
-    return userId;
+    return token;
   }
 
   public void reset() {
     users.clear();
     tokensByValue.clear();
+    revokedTokensByValue.clear();
   }
 }
