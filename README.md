@@ -49,8 +49,12 @@ API Documentation (after starting the app):
 - `http://localhost:8080/v3/api-docs`
 
 ### API Testing
-This backend is validated by an external API test suite:
-👉 https://github.com/krasimir-kuzmanov/fintech-api-tests
+This backend is validated by automated test suites:
+- API tests: https://github.com/krasimir-kuzmanov/fintech-api-tests
+- UI tests: https://github.com/krasimir-kuzmanov/fintech-ui-tests
+
+Test support endpoint:
+- POST /test/reset - clears in-memory auth, account, and transaction state for deterministic tests.
 
 H2 console:
 - `http://localhost:8080/h2-console`
