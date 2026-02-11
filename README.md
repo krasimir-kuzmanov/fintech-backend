@@ -53,8 +53,9 @@ This backend is validated by automated test suites:
 - API tests: https://github.com/krasimir-kuzmanov/fintech-api-tests
 - UI tests: https://github.com/krasimir-kuzmanov/fintech-ui-tests
 
-Test support endpoint:
+Test support endpoints:
 - POST /test/reset - clears in-memory auth, account, and transaction state for deterministic tests.
+- GET /test/users/{username} - returns a user by username for test verification (404 if missing).
 
 H2 console:
 - `http://localhost:8080/h2-console`
