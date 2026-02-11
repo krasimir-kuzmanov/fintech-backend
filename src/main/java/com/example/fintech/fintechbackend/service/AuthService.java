@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
 
@@ -36,7 +37,7 @@ public class AuthService {
       throw new FintechException(ErrorCode.INVALID_CREDENTIALS);
     }
 
-    String token = UUID.randomUUID().toString(); // fake token
+    String token = UUID.randomUUID().toString();
     tokensByValue.put(token, user.getId());
     revokedTokensByValue.remove(token);
 
@@ -66,6 +67,10 @@ public class AuthService {
 
     tokensByValue.remove(token);
     revokedTokensByValue.putIfAbsent(token, Instant.now());
+  }
+
+  public Optional<User> findByUsername(String username) {
+    return Optional.ofNullable(users.get(username));
   }
 
   private String extractToken(String authorizationHeader) {

@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.15
+- Add test support endpoint GET /test/users/{username} for deterministic user-existence validation in UI tests.
+
 ## 0.0.14
 - Add private constructor to constants-only class `AuthConstants` to prevent instantiation.
 
