@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.14
+- Add private constructor to constants-only class `AuthConstants` to prevent instantiation.
+
 ## 0.0.13
 - Add test support endpoint `POST /test/reset` to clear in-memory auth, account, and transaction state.
 
