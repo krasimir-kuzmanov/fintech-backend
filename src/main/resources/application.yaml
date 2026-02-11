@@ -1,4 +1,9 @@
 spring:
+  jackson:
+    locale: en_US
+    generator:
+      write-bigdecimal-as-plain: true
+
   application:
     name: fintech-backend
 
