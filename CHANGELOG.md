@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.13
+- Add test support endpoint `POST /test/reset` to clear in-memory auth, account, and transaction state.
+
 ## 0.0.12
 - `POST /account/{accountId}/fund` now accepts only positive numeric amounts.
 
