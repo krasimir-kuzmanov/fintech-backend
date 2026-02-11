@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.16
+- Enforce locale-independent JSON numeric serialization for monetary values using Locale.ROOT.
+- Serialize BigDecimal values as plain decimals (no scientific notation) in API responses.
+
 ## 0.0.15
 - Add test support endpoint GET /test/users/{username} for deterministic user-existence validation in UI tests.
 

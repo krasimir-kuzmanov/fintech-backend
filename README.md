@@ -67,4 +67,5 @@ H2 console:
 
 ## Notes
 - The database is in-memory and resets on each restart.
+- API monetary JSON values are serialized in a locale-independent format (dot decimal).
 - Hibernate `create-drop` will create schema on startup and drop on shutdown.
