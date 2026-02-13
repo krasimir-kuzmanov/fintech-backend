@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.20
+- Validate `POST /auth/login` input and return HTTP `400 Bad Request` with `INVALID_REQUEST` when username or password is blank.
+- Keep invalid credential semantics for non-empty input as HTTP `401 Unauthorized` with `INVALID_CREDENTIALS`.
+
 ## 0.0.19
 - Reject `POST /transaction/payment` requests where `fromAccountId` equals `toAccountId` with HTTP `400 Bad Request` and error `SAME_ACCOUNT_TRANSFER`.
 
