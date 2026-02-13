@@ -33,6 +33,8 @@ public class AuthService {
   }
 
   public Map<String, String> login(String username, String password) {
+    validateLoginInput(username, password);
+
     User user = users.get(username);
 
     if (user == null || !user.getPassword().equals(password)) {
@@ -76,6 +78,12 @@ public class AuthService {
   }
 
   private void validateRegistrationInput(String username, String password) {
+    if (username == null || username.isBlank() || password == null || password.isBlank()) {
+      throw new FintechException(ErrorCode.INVALID_REQUEST);
+    }
+  }
+
+  private void validateLoginInput(String username, String password) {
     if (username == null || username.isBlank() || password == null || password.isBlank()) {
       throw new FintechException(ErrorCode.INVALID_REQUEST);
     }
