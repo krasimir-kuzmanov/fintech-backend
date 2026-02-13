@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.18
+- Validate `POST /auth/register` input and return HTTP `400 Bad Request` with `INVALID_REQUEST` when username or password is blank.
+
 ## 0.0.17
 - Return HTTP `401 Unauthorized` for `INVALID_CREDENTIALS` auth failures to align login semantics with standard API behavior.
 

@@ -20,6 +20,8 @@ public class AuthService {
   private final Map<String, Instant> revokedTokensByValue = new ConcurrentHashMap<>();
 
   public User register(String username, String password) {
+    validateRegistrationInput(username, password);
+
     if (users.containsKey(username)) {
       throw new FintechException(ErrorCode.USER_ALREADY_EXISTS);
     }
@@ -71,6 +73,12 @@ public class AuthService {
 
   public Optional<User> findByUsername(String username) {
     return Optional.ofNullable(users.get(username));
+  }
+
+  private void validateRegistrationInput(String username, String password) {
+    if (username == null || username.isBlank() || password == null || password.isBlank()) {
+      throw new FintechException(ErrorCode.INVALID_REQUEST);
+    }
   }
 
   private String extractToken(String authorizationHeader) {
