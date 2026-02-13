@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.19
+- Reject `POST /transaction/payment` requests where `fromAccountId` equals `toAccountId` with HTTP `400 Bad Request` and error `SAME_ACCOUNT_TRANSFER`.
+
 ## 0.0.18
 - Validate `POST /auth/register` input and return HTTP `400 Bad Request` with `INVALID_REQUEST` when username or password is blank.
 

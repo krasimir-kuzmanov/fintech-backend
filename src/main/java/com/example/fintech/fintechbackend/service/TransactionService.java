@@ -30,6 +30,10 @@ public class TransactionService {
       throw new FintechException(ErrorCode.INVALID_AMOUNT);
     }
 
+    if (fromAccountId.equals(toAccountId)) {
+      throw new FintechException(ErrorCode.SAME_ACCOUNT_TRANSFER);
+    }
+
     Account from = accountService.getAccount(fromAccountId);
     Account to = accountService.getAccount(toAccountId);
 
