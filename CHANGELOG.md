@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project follows Keep a Changelog format.
 
+## 0.0.17
+- Return HTTP `401 Unauthorized` for `INVALID_CREDENTIALS` auth failures to align login semantics with standard API behavior.
+
 ## 0.0.16
 - Enforce locale-independent JSON numeric serialization for monetary values using Locale.ROOT.
 - Serialize BigDecimal values as plain decimals (no scientific notation) in API responses.
