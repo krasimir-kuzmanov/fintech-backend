@@ -13,7 +13,8 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(FintechException.class)
   public ResponseEntity<Map<String, String>> handleFintechException(FintechException exception) {
-    if (exception.getErrorCode() == ErrorCode.UNAUTHORIZED) {
+    if (exception.getErrorCode() == ErrorCode.UNAUTHORIZED
+        || exception.getErrorCode() == ErrorCode.INVALID_CREDENTIALS) {
       return ResponseEntity
           .status(HttpStatus.UNAUTHORIZED)
           .body(Map.of("error", exception.getErrorCode().name()));
