@@ -1,7 +1,6 @@
 package com.example.fintech.fintechbackend.exception;
 
 import com.example.fintech.fintechbackend.model.ErrorCode;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,20 +12,17 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(FintechException.class)
   public ResponseEntity<Map<String, String>> handleFintechException(FintechException exception) {
-    if (exception.getErrorCode() == ErrorCode.UNAUTHORIZED) {
-      return ResponseEntity
-          .status(HttpStatus.UNAUTHORIZED)
-          .body(Map.of("error", exception.getErrorCode().name()));
-    }
-
-    if (exception.getErrorCode() == ErrorCode.FORBIDDEN) {
-      return ResponseEntity
-          .status(HttpStatus.FORBIDDEN)
-          .body(Map.of("error", exception.getErrorCode().name()));
-    }
-
+    ErrorCode errorCode = exception.getErrorCode();
     return ResponseEntity
-        .status(HttpStatus.BAD_REQUEST)
-        .body(Map.of("error", exception.getErrorCode().name()));
+        .status(errorCode.getHttpStatus())
+        .body(Map.of("error", errorCode.name()));
+  }
+
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<Map<String, String>> handleGenericException(Exception exception) {
+    ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
+    return ResponseEntity
+        .internalServerError()
+        .body(Map.of("error", errorCode.name()));
   }
 }
